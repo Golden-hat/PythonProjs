@@ -5,7 +5,7 @@ from pygame.constants import WINDOWRESIZED
 
 pygame.init();
 
-#dimensions!
+#dimensions!-------------------------------------------------------------------
 height = 600;
 width = 800;
 
@@ -18,36 +18,36 @@ y1_change = 0
 snakespeed = 15
 score = 0
 
-#canvas!
+#canvas!----------------------------------------------------------------------
 dis = pygame.display.set_mode((width, height));
 pygame.display.set_caption('Snake!');
 
-#fruit 1st!
+#fruit 1st!-------------------------------------------------------------------
 randvaluex = round(random.randrange(0, width - 20) / 20.0) * 20.0
 randvaluey = round(random.randrange(0, height - 20) / 20.0) * 20.0
 
-#snakegrowth and drawing!
+#snakegrowth and drawing!-----------------------------------------------------
 LenSnake = 1
 snake_list = []
 def snake_body(snake_list):
     for x in snake_list:
             pygame.draw.rect(dis, snakebodycolor, [x[0], x[1], 20, 20])
 
-#colors
+#colors-----------------------------------------------------------------------
 red=(255,0,0)
 snakebodycolor = (127,255,0)
 black = (0, 0, 0)
 font_style = pygame.font.SysFont(None, 30)
 
-#endgameLogic!
+#endgameLogic!----------------------------------------------------------------
 gameOver = False;
 while not gameOver:
 
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             gameOver = True;
-    
-    #Movement!
+
+    #Movement!----------------------------------------------------------------
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:
                 x1_change = 20;
@@ -68,21 +68,20 @@ while not gameOver:
     x1 += x1_change;
     y1 += y1_change;
 
-    #fruit!
+    #fruit!-------------------------------------------------------------------
     if randvaluex == x1 and randvaluey == y1:
             randvaluex = round(random.randrange(0, width - 20) / 20.0) * 20.0
             randvaluey = round(random.randrange(0, height - 20) / 20.0) * 20.0
             score += 1
             LenSnake += 1
             print(score)
-            print("Yummi!")
+            print("Yummy!")
 
     if (x1 > width or y1 > height) or (y1 < 0 or x1 < 0):
         gameOver = True;
 
-    #painting!
+    #painting!----------------------------------------------------------------
     dis.fill(black)
-    
     pygame.draw.rect(dis, red, [randvaluex, randvaluey, 20, 20])
 
     snake_Head = []
@@ -96,7 +95,6 @@ while not gameOver:
     for x in snake_list[:-1]:
         if x == snake_Head:
             gameOver = True
-
     snake_body(snake_list)
 
     def message(msg,color):
@@ -106,13 +104,13 @@ while not gameOver:
     message("Score: "+str(score),snakebodycolor);
     pygame.display.update()
 
-    #clock!
+    #clock!-------------------------------------------------------------------
     clock = pygame.time.Clock() 
     clock.tick(snakespeed)
 
     pygame.display.update() 
 
-#you lost!
+#you lost!--------------------------------------------------------------------
 def message(msg,color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [width/2, height/2])

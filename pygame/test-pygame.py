@@ -33,7 +33,7 @@ def snake_body(snake_list):
     for x in snake_list:
         pygame.draw.rect(dis, snakebodycolor, [x[0], x[1], 20, 20])
 
-#colors-----------------------------------------------------------------------
+#colors!-----------------------------------------------------------------------
 red=(255,0,0)
 snakebodycolor = (127,255,0)
 black = (0, 0, 0)
@@ -70,12 +70,12 @@ while not gameOver:
 
     #fruit!-------------------------------------------------------------------
     if randvaluex == x1 and randvaluey == y1:
-            randvaluex = round(random.randrange(0, width - 20) / 20.0) * 20.0
-            randvaluey = round(random.randrange(0, height - 20) / 20.0) * 20.0
-            score += 1
-            LenSnake += 1
-            print(score)
-            print("Yummy!")
+        randvaluex = round(random.randrange(20, width - 40) / 20.0) * 20.0
+        randvaluey = round(random.randrange(20, height - 40) / 20.0) * 20.0
+        score += 1
+        LenSnake += 1
+        print(score)
+        print("Yummy!")
 
     if (x1 > width or y1 > height) or (y1 < 0 or x1 < 0):
         gameOver = True;
@@ -90,8 +90,9 @@ while not gameOver:
     snake_list.append(snake_Head)
 
     if len(snake_list) > LenSnake:
-            del snake_list[0]
- 
+       del snake_list[0]
+       
+    print(len(snake_list))
     for x in snake_list[:-1]:
         if x == snake_Head:
             gameOver = True

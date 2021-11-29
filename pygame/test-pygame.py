@@ -31,7 +31,7 @@ LenSnake = 1
 snake_list = []
 def snake_body(snake_list):
     for x in snake_list:
-            pygame.draw.rect(dis, snakebodycolor, [x[0], x[1], 20, 20])
+        pygame.draw.rect(dis, snakebodycolor, [x[0], x[1], 20, 20])
 
 #colors-----------------------------------------------------------------------
 red=(255,0,0)

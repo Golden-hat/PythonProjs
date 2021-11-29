@@ -22,13 +22,6 @@ score = 0
 dis = pygame.display.set_mode((width, height));
 pygame.display.set_caption('Snake!');
 
-#colors!
-snakeheadcolor = (0,100,0)
-red=(255,0,0)
-snakebodycolor = (127,255,00)
-black = (0, 0, 0)
-font_style = pygame.font.SysFont(None, 30)
-
 #fruit 1st!
 randvaluex = round(random.randrange(0, width - 20) / 20.0) * 20.0
 randvaluey = round(random.randrange(0, height - 20) / 20.0) * 20.0
@@ -38,11 +31,13 @@ LenSnake = 1
 snake_list = []
 def snake_body(snake_list):
     for x in snake_list:
-        if snake_list == snake_Head:
-            pygame.draw.rect(dis, snakeheadcolor, [x[0], x[1], 20, 20])
-        else:
             pygame.draw.rect(dis, snakebodycolor, [x[0], x[1], 20, 20])
 
+#colors
+red=(255,0,0)
+snakebodycolor = (127,255,0)
+black = (0, 0, 0)
+font_style = pygame.font.SysFont(None, 30)
 
 #endgameLogic!
 gameOver = False;
@@ -51,7 +46,7 @@ while not gameOver:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             gameOver = True;
-
+    
     #Movement!
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:

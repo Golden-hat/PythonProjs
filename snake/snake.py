@@ -12,7 +12,7 @@ width = 800;
 x1 = 400
 y1 = 300
  
-x1_change = 0       
+x1_change = 0
 y1_change = 0
 
 snakespeed = 15
@@ -77,7 +77,7 @@ while not gameOver:
         print(score)
         print("Yummy!")
 
-    if (x1 > width or y1 >= height) or (y1 < 0 or x1 < 0):
+    if (x1 > width or y1 >=  height) or (y1 < 0 or x1 < 0):
         gameOver = True;
 
     #painting!----------------------------------------------------------------
@@ -111,8 +111,7 @@ while not gameOver:
     clock = pygame.time.Clock() 
     clock.tick(snakespeed)
 
-    pygame.display.update() 
-
+s
 #you lost!--------------------------------------------------------------------
 def message(msg,color):
     mesg = font_style.render(msg, True, color)

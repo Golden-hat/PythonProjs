@@ -77,7 +77,7 @@ while not gameOver:
         print(score)
         print("Yummy!")
 
-    if (x1 > width or y1 > height) or (y1 < 0 or x1 < 0):
+    if (x1 > width or y1 >= height) or (y1 < 0 or x1 < 0):
         gameOver = True;
 
     #painting!----------------------------------------------------------------

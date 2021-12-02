@@ -23,8 +23,21 @@ pygame.display.set_caption("Dodge the walls!")
 
 #wall generation!
 def wall (WallArray, SpawnDisty1):
-    for i in (WallArray):
-        pygame.draw.rect(dis, red, [i, SpawnDisty1, 10, 10])
+    i = 0
+    while i < len(WallArray):
+        pygame.draw.rect(dis, red, [WallArray[i], SpawnDisty1, 10, 10])
+        i += 1
+
+def wallSpawn(WallArray, SpawnDisty1):
+    gaps = round(random.randrange(0, 300))
+    x = 0
+    randvaluey = round(random.randrange(gaps, width) / 10) * 10
+    while x < ((width/10) - gaps):
+        randvaluey = round(random.randrange(gaps, width) / 10) * 10
+        x += 1
+
+    WallArray.append(randvaluey)
+    wall(WallArray, SpawnDisty1)
 
 #player!
 def player(x1p, y1p):
@@ -87,17 +100,9 @@ def gameloop():
         #drawing!
         dis.fill(black)
         player(x1, y1)
+        wallSpawn(WallArray, SpawnDisty1)
 
         #walls!
-        gaps = round(random.randrange(0, 20))
-        x = 0
-    
-        while x < ((width/10) - gaps):
-            randvaluey = round(random.randrange(0, height - 10) / 10) * 10
-            WallArray.append(randvaluey)
-            x += 1
-
-        wall(WallArray, SpawnDisty1)
 
         pygame.display.update()
 

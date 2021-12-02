@@ -15,8 +15,6 @@ y1 = 300
 x1_change = 0       
 y1_change = 0
 
-gameover = False
-
 #canvas!
 dis = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Dodge the walls!")
@@ -24,14 +22,22 @@ pygame.display.set_caption("Dodge the walls!")
 #gameloop!
 
 def gameloop():
-    while not gameover:
+    gameOver = False
+    while not gameOver:
 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                gameOver = True;
+                gameOver = True
 
-    pygame.display.update() 
+    pygame.display.update()
 
-#termination--------
-pygame.quit()
-quit()
+    #termination--------
+    pygame.quit()
+    quit()
+
+gameloop()
+
+
+
+
+

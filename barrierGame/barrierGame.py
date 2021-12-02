@@ -3,9 +3,13 @@ import pygame
 import time
 import random
 
+<<<<<<< HEAD
 from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN, K_a, K_d, K_s, K_w
 
 pygame.init();
+=======
+pygame.init()
+>>>>>>> 97e0e865d9043ed191fefd2675d3c42d4d4fe649
 
 #variables!--------
 height = 800

@@ -111,7 +111,7 @@ while not gameOver:
     clock = pygame.time.Clock() 
     clock.tick(snakespeed)
 
-s
+
 #you lost!--------------------------------------------------------------------
 def message(msg,color):
     mesg = font_style.render(msg, True, color)

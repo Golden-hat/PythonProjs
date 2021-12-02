@@ -88,7 +88,8 @@ while not gameOver:
     snake_Head.append(x1)
     snake_Head.append(y1)
     snake_list.append(snake_Head)
-
+    print(snake_Head)
+    print(snake_list[0])
     if len(snake_list) > LenSnake:
        del snake_list[0]
 
@@ -96,7 +97,7 @@ while not gameOver:
     for x in snake_list[:-1]:
         if x == snake_Head:
             gameOver = True
-            
+
     snake_body(snake_list)
 
     def message(msg,color):

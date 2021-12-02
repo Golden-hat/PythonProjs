@@ -12,7 +12,7 @@ width = 800;
 x1 = 400
 y1 = 300
  
-x1_change = 0       
+x1_change = 0
 y1_change = 0
 
 snakespeed = 15
@@ -77,7 +77,7 @@ while not gameOver:
         print(score)
         print("Yummy!")
 
-    if (x1 > width or y1 > height) or (y1 < 0 or x1 < 0):
+    if (x1 > width or y1 >=  height) or (y1 < 0 or x1 < 0):
         gameOver = True;
 
     #painting!----------------------------------------------------------------
@@ -88,16 +88,24 @@ while not gameOver:
     snake_Head.append(x1)
     snake_Head.append(y1)
     snake_list.append(snake_Head)
+<<<<<<< HEAD:pygame/test-pygame.py
     print(snake_Head)
     print(snake_list[0])
+=======
+    
+>>>>>>> b9798a387718b453ba5c96d1d6a0a36a3884bf48:snake/snake.py
     if len(snake_list) > LenSnake:
        del snake_list[0]
 
-    print(len(snake_list))
     for x in snake_list[:-1]:
         if x == snake_Head:
             gameOver = True
 
+<<<<<<< HEAD:pygame/test-pygame.py
+=======
+    print(len(snake_list))
+
+>>>>>>> b9798a387718b453ba5c96d1d6a0a36a3884bf48:snake/snake.py
     snake_body(snake_list)
 
     def message(msg,color):
@@ -111,7 +119,6 @@ while not gameOver:
     clock = pygame.time.Clock() 
     clock.tick(snakespeed)
 
-    pygame.display.update() 
 
 #you lost!--------------------------------------------------------------------
 def message(msg,color):

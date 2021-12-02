@@ -3,7 +3,7 @@ import pygame
 import time
 import random
 
-pygame.init();
+pygame.init()
 
 #variables!--------
 height = 400

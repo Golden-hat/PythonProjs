@@ -190,8 +190,3 @@ def gameloop(score):
     quit()
 
 gameloop(score)
-
-
-
-
-

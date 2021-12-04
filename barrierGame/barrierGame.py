@@ -102,25 +102,25 @@ def gameloop(score):
         while j < len(WallArray1):
 
             if (x1 >= WallArray1[j] 
-            and x1 < WallArray1[j]+100
+            and x1 < WallArray1[j]
             and (y1 == SpawnDisty[0]+20 or y1 == SpawnDisty[0]+10)):
                 gameOver = True   
             
 
             if (x1 >= WallArray2[j] 
-            and x1 < WallArray2[j]+100
+            and x1 < WallArray2[j]
             and (y1 == SpawnDisty[1]+20 or y1 == SpawnDisty[1]+10)):
                 gameOver = True   
             
 
             if (x1 >= WallArray3[j] 
-            and x1 < WallArray3[j]+100
+            and x1 < WallArray3[j]
             and (y1 == SpawnDisty[2]+20 or y1 == SpawnDisty[2]+10)):
                 gameOver = True
             
 
             if (x1 >= WallArray4[j] 
-            and x1 < WallArray4[j]+100
+            and x1 < WallArray4[j]
             and (y1 == SpawnDisty[3]+20 or y1 == SpawnDisty[3]+10)):
                 gameOver = True   
             j += 1
@@ -143,15 +143,15 @@ def gameloop(score):
                 score += 1
             if SpawnDisty[1]>= height:
                 rval2 = np.random.randint(0, 10, 10)
-                SpawnDisty[1] = random.randint(-3, 0)*10
+                SpawnDisty[1] = 0
                 score += 1
-            if SpawnDisty[2]>= height+100:
+            if SpawnDisty[2]>= height:
                 rval3 = np.random.randint(0, 10, 10)
-                SpawnDisty[2] = random.randint(-9, -6)*10
+                SpawnDisty[2] = 0
                 score += 1
-            if SpawnDisty[3]>= height+150:
+            if SpawnDisty[3]>= height:
                 rval4 = np.random.randint(0, 10, 10)
-                SpawnDisty[3] = random.randint(-15, -12)*10
+                SpawnDisty[3] = 0 
                 score += 1        
 
         #difficulty

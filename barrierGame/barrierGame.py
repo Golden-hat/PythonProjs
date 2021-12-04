@@ -156,7 +156,7 @@ def gameloop(score):
 
         #difficulty
         if score%11 == 10:
-            gamespeed += 3.25
+            gamespeed += 2.5
             score += 1
     
         #drawing!

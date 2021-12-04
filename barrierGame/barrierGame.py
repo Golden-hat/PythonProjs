@@ -7,13 +7,13 @@ from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN, TI
 
 pygame.init();
 
-#variables!--------
+#variables!
 height = 800
 width = 1000
 
-gamespeed = 15
 font_style = pygame.font.SysFont(None, 30)
 font_style2= pygame.font.SysFont(None, 80)
+score = 0
 
 #colors!
 red = (255, 0, 0)
@@ -37,16 +37,17 @@ def player(x1p, y1p):
     pygame.draw.rect(dis, red, [x1p, y1p, 10, 10])
 
 #gameloop!
-def gameloop():
+def gameloop(score):
 
     x1 = width/2
     y1 = height/2
 
     x1_change = 0
     y1_change = 0
-    SpawnDisty = [-50, -350, -650, -850]
+    SpawnDisty = [0, -200, -400, -600]
     gameOver = False
     score = 0
+    gamespeed = 15 
 
     #walls!
     timesWallRandomGen = 1
@@ -59,7 +60,7 @@ def gameloop():
 
     WallArray1 = [rval1[0]*100, rval1[1]*100, rval1[2]*100, 
     rval1[3]*100, rval1[4]*100, rval1[5]*100, rval1[6]*100, 
-    rval1[7]*100, rval1[8]*100, rval1[9]*100]
+    rval1[7]*100, rval1[8]*100, rval1[1]*100]
 
     WallArray2 = [rval2[0]*100, rval2[1]*100, rval2[2]*100, 
     rval2[3]*100, rval2[4]*100, rval2[5]*100, rval2[6]*100, 
@@ -88,10 +89,10 @@ def gameloop():
                     x1_change = 0;
                 elif event.key == K_a:
                     y1_change = 0;
-                    x1_change = -10;
+                    x1_change = -15;
                 elif event.key == K_d:
                     y1_change = 0;
-                    x1_change = 10;
+                    x1_change = 15;
 
         x1 += x1_change
         y1 += y1_change
@@ -136,23 +137,29 @@ def gameloop():
             SpawnDisty[i] += 10
             i += 1
 
-            if SpawnDisty[0]>= height+10:
+            if SpawnDisty[0]>= height:
                 rval1 = np.random.randint(0, 10, 10)
-                SpawnDisty[0] = -50
+                SpawnDisty[0] = 0
                 score += 1
-            if SpawnDisty[1]>= height+10:
+            if SpawnDisty[1]>= height:
                 rval2 = np.random.randint(0, 10, 10)
-                SpawnDisty[1] = -100
+                SpawnDisty[1] = random.randint(-3, 0)*10
                 score += 1
-            if SpawnDisty[2]>= height+10:
+            if SpawnDisty[2]>= height+100:
                 rval3 = np.random.randint(0, 10, 10)
-                SpawnDisty[2] = -150
+                SpawnDisty[2] = random.randint(-6, -3)*10
                 score += 1
-            if SpawnDisty[3]>= height+10:
+            if SpawnDisty[3]>= height+150:
                 rval4 = np.random.randint(0, 10, 10)
-                SpawnDisty[3] = -250
-                score += 1
-                
+                SpawnDisty[3] = random.randint(-9, -6)*10
+                score += 1        
+
+        #difficulty
+        if score%11 == 10:
+            
+            gamespeed += 5
+            score += 1
+    
         #drawing!
         dis.fill(black)
         player(x1, y1)
@@ -183,7 +190,7 @@ def gameloop():
     pygame.quit()
     quit()
 
-gameloop()
+gameloop(score)
 
 
 

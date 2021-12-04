@@ -59,19 +59,19 @@ def gameloop(score):
         timesWallRandomGen += 1
 
     WallArray1 = [rval1[0]*100, rval1[1]*100, rval1[2]*100, 
-    rval1[3]*100, rval1[4]*100, rval1[5]*100, rval1[6]*100, 
+    rval1[3]*100, rval1[4]*100, rval1[1]*100, rval1[6]*100, 
     rval1[7]*100, rval1[8]*100, rval1[1]*100]
 
     WallArray2 = [rval2[0]*100, rval2[1]*100, rval2[2]*100, 
     rval2[3]*100, rval2[4]*100, rval2[5]*100, rval2[6]*100, 
-    rval2[7]*100, rval2[8]*100, rval2[9]*100]
+    rval2[7]*100, rval2[8]*100, rval2[1]*100]
     
     WallArray3 = [rval3[0]*100, rval3[1]*100, rval3[2]*100, 
-    rval3[3]*100, rval3[4]*100, rval3[5]*100, rval3[6]*100, 
+    rval3[1]*100, rval3[4]*100, rval3[5]*100, rval3[6]*100, 
     rval3[7]*100, rval3[8]*100, rval3[9]*100]
 
     WallArray4 = [rval4[0]*100, rval4[1]*100, rval4[2]*100, 
-    rval4[3]*100, rval4[4]*100, rval4[5]*100, rval4[6]*100, 
+    rval4[3]*100, rval4[4]*100, rval4[5]*100, rval4[1]*100, 
     rval4[7]*100, rval4[8]*100, rval4[9]*100]
 
     while not gameOver:
@@ -147,17 +147,16 @@ def gameloop(score):
                 score += 1
             if SpawnDisty[2]>= height+100:
                 rval3 = np.random.randint(0, 10, 10)
-                SpawnDisty[2] = random.randint(-6, -3)*10
+                SpawnDisty[2] = random.randint(-9, -6)*10
                 score += 1
             if SpawnDisty[3]>= height+150:
                 rval4 = np.random.randint(0, 10, 10)
-                SpawnDisty[3] = random.randint(-9, -6)*10
+                SpawnDisty[3] = random.randint(-15, -12)*10
                 score += 1        
 
         #difficulty
         if score%11 == 10:
-            
-            gamespeed += 5
+            gamespeed += 3.25
             score += 1
     
         #drawing!

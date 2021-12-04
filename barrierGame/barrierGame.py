@@ -102,25 +102,25 @@ def gameloop(score):
         while j < len(WallArray1):
 
             if (x1 >= WallArray1[j] 
-            and x1 < WallArray1[j]
+            and x1 < WallArray1[j]+100
             and (y1 == SpawnDisty[0]+20 or y1 == SpawnDisty[0]+10)):
                 gameOver = True   
             
 
             if (x1 >= WallArray2[j] 
-            and x1 < WallArray2[j]
+            and x1 < WallArray2[j]+100
             and (y1 == SpawnDisty[1]+20 or y1 == SpawnDisty[1]+10)):
                 gameOver = True   
             
 
             if (x1 >= WallArray3[j] 
-            and x1 < WallArray3[j]
+            and x1 < WallArray3[j]+100
             and (y1 == SpawnDisty[2]+20 or y1 == SpawnDisty[2]+10)):
                 gameOver = True
             
 
             if (x1 >= WallArray4[j] 
-            and x1 < WallArray4[j]
+            and x1 < WallArray4[j]+100
             and (y1 == SpawnDisty[3]+20 or y1 == SpawnDisty[3]+10)):
                 gameOver = True   
             j += 1
@@ -138,25 +138,21 @@ def gameloop(score):
             i += 1
 
             if SpawnDisty[0]>= height:
-                rval1 = np.random.randint(0, 10, 10)
                 SpawnDisty[0] = 0
                 score += 1
             if SpawnDisty[1]>= height:
-                rval2 = np.random.randint(0, 10, 10)
                 SpawnDisty[1] = 0
                 score += 1
             if SpawnDisty[2]>= height:
-                rval3 = np.random.randint(0, 10, 10)
                 SpawnDisty[2] = 0
                 score += 1
             if SpawnDisty[3]>= height:
-                rval4 = np.random.randint(0, 10, 10)
                 SpawnDisty[3] = 0 
                 score += 1        
 
         #difficulty
         if score%11 == 10:
-            gamespeed += 2.5
+            gamespeed += 3.25
             score += 1
     
         #drawing!
@@ -190,3 +186,8 @@ def gameloop(score):
     quit()
 
 gameloop(score)
+
+
+
+
+

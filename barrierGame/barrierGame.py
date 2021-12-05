@@ -178,7 +178,6 @@ def gameloop(score, diff):
             gamespeed += 2.5
             diff += 1
         
-        
         #drawing!
         dis.fill(black)
         player(x1, y1)

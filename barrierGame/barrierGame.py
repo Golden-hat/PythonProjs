@@ -2,7 +2,7 @@ import numpy as np
 from numpy.random.mtrand import rand
 import pygame
 import time
-from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN, TIMER_RESOLUTION, K_a, K_d, K_s, K_w
+from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN, TIMER_RESOLUTION, K_a, K_c, K_d, K_s, K_w
 
 pygame.init();
 
@@ -13,8 +13,8 @@ width = 1000
 font_style = pygame.font.SysFont(None, 30)
 font_style2= pygame.font.SysFont(None, 80)
 score = 0
-SpawnDisty = [0, -200, -400, -600]
 diff = 0
+SpawnDisty = []
 
 #colors!
 red = (255, 0, 0)
@@ -47,6 +47,8 @@ def gameloop(score, diff):
     x1_change = 0
     y1_change = 0
     gameOver = False
+    gameClose = False
+    SpawnDisty = [0, -200, -400, -600]
 
     iter1 = 0
     iter2 = 0
@@ -56,7 +58,7 @@ def gameloop(score, diff):
     gamespeed = 15
     x1 = width/2
     y1 = height/2
-
+    
     z1 = 0
     z2 = 0
     z3 = 0
@@ -94,9 +96,36 @@ def gameloop(score, diff):
         rval4[3]*100, rval4[4]*100, rval4[5]*100, rval4[1]*100, 
         rval4[7]*100, rval4[8]*100, rval4[9]*100]
 
+        #GameOverLogic!
+        while gameClose == True:
+                def message(msg,color):
+                    mesg = font_style2.render(msg, True, color)
+                    dis.blit(mesg, [width/2.5, height/2.25])
+
+                message("You lost",red)
+
+                def message3(msg,color):
+                    mesg = font_style.render(msg, True, color)
+                    dis.blit(mesg, [width/2.5 + 200, height/2.25 +200])
+
+                message3("Press c to try again or q to quit",red)
+
+                pygame.display.update()
+
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_q:
+                            gameOver = True
+                            gameClose = False
+                        if event.key == pygame.K_c:
+                            gameOver = False
+                            SpawnDisty = [0, -200, -400, -600]
+                            gameloop(score, diff)
+
         for event in pygame.event.get():
+
             if event.type==pygame.QUIT:
-                gameOver = True
+                gameOver = True 
 
             if event.type==pygame.KEYDOWN:
                 if event.key == K_w:
@@ -111,7 +140,7 @@ def gameloop(score, diff):
                 elif event.key == K_d:
                     y1_change = 0;
                     x1_change = 15;
-
+                    
         x1 += x1_change
         y1 += y1_change
 
@@ -122,26 +151,26 @@ def gameloop(score, diff):
             if (x1 >= WallArray1[j] 
             and x1 < WallArray1[j]+100
             and (y1 == SpawnDisty[0]+20 or y1 == SpawnDisty[0]+10)):
-                gameOver = True   
+                gameClose = True
 
             if (x1 >= WallArray2[j] 
             and x1 < WallArray2[j]+100
             and (y1 == SpawnDisty[1]+20 or y1 == SpawnDisty[1]+10)):
-                gameOver = True   
+                gameClose = True
 
             if (x1 >= WallArray3[j] 
             and x1 < WallArray3[j]+100
             and (y1 == SpawnDisty[2]+20 or y1 == SpawnDisty[2]+10)):
-                gameOver = True
+                gameClose = True
             
             if (x1 >= WallArray4[j] 
             and x1 < WallArray4[j]+100
             and (y1 == SpawnDisty[3]+20 or y1 == SpawnDisty[3]+10)):
-                gameOver = True   
+                gameClose = True
             j += 1
 
             if (x1 > width or y1 >= height) or (y1 < 0 or x1 < 0):
-                gameOver = True;
+                gameClose = True
         
         #clock!
         clock = pygame.time.Clock() 
@@ -194,15 +223,6 @@ def gameloop(score, diff):
         message("Score: "+str(score),red)
 
         pygame.display.update()
-    
-    #you lost!
-    def message(msg,color):
-        mesg = font_style2.render(msg, True, color)
-        dis.blit(mesg, [width/2.5, height/2.25])
-
-    message("You lost",red)
-    pygame.display.update()
-    time.sleep(2)
 
     #termination
     pygame.quit()

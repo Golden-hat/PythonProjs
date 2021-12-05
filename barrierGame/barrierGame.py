@@ -175,7 +175,7 @@ def gameloop(score, diff):
 
         #difficulty
         if diff%11 == 10:
-            gamespeed += 2.5
+            gamespeed += 2
             diff += 1
         
         #drawing!

@@ -1,8 +1,7 @@
 import numpy as np
+from numpy.random.mtrand import rand
 import pygame
 import time
-import random
-
 from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN, TIMER_RESOLUTION, K_a, K_d, K_s, K_w
 
 pygame.init();
@@ -14,6 +13,8 @@ width = 1000
 font_style = pygame.font.SysFont(None, 30)
 font_style2= pygame.font.SysFont(None, 80)
 score = 0
+SpawnDisty = [0, -200, -400, -600]
+diff = 0
 
 #colors!
 red = (255, 0, 0)
@@ -26,55 +27,72 @@ pygame.display.set_caption("Dodge the walls!")
 
 #wall generation!
 def wall (SpawnDisty, type, WallArray):
-    
     i = 0
     while i < len(WallArray):
         pygame.draw.rect(dis, yellow, [WallArray[i], SpawnDisty[type], 100, 10])
         i += 1
+
+def randy(type):
+    if SpawnDisty[type]>= height:
+        rval = np.random.randint(0, 10, 10)
+    return rval
 
 #player!
 def player(x1p, y1p):
     pygame.draw.rect(dis, red, [x1p, y1p, 10, 10])
 
 #gameloop!
-def gameloop(score):
-
-    x1 = width/2
-    y1 = height/2
+def gameloop(score, diff):
 
     x1_change = 0
     y1_change = 0
-    SpawnDisty = [0, -200, -400, -600]
     gameOver = False
-    score = 0
-    gamespeed = 15 
 
-    #walls!
-    timesWallRandomGen = 1
-    while timesWallRandomGen <= 4:
-        rval1 = np.random.randint(0, 10, 10)
-        rval2 = np.random.randint(0, 10, 10)
-        rval3 = np.random.randint(0, 10, 10)
-        rval4 = np.random.randint(0, 10, 10)
-        timesWallRandomGen += 1
+    iter1 = 0
+    iter2 = 0
+    iter3 = 0
+    iter4 = 0
 
-    WallArray1 = [rval1[0]*100, rval1[1]*100, rval1[2]*100, 
-    rval1[3]*100, rval1[4]*100, rval1[1]*100, rval1[6]*100, 
-    rval1[7]*100, rval1[8]*100, rval1[1]*100]
+    gamespeed = 15
+    x1 = width/2
+    y1 = height/2
 
-    WallArray2 = [rval2[0]*100, rval2[1]*100, rval2[2]*100, 
-    rval2[3]*100, rval2[4]*100, rval2[5]*100, rval2[6]*100, 
-    rval2[7]*100, rval2[8]*100, rval2[1]*100]
-    
-    WallArray3 = [rval3[0]*100, rval3[1]*100, rval3[2]*100, 
-    rval3[1]*100, rval3[4]*100, rval3[5]*100, rval3[6]*100, 
-    rval3[7]*100, rval3[8]*100, rval3[9]*100]
-
-    WallArray4 = [rval4[0]*100, rval4[1]*100, rval4[2]*100, 
-    rval4[3]*100, rval4[4]*100, rval4[5]*100, rval4[1]*100, 
-    rval4[7]*100, rval4[8]*100, rval4[9]*100]
+    z1 = 0
+    z2 = 0
+    z3 = 0
+    z4 = 0
 
     while not gameOver:
+        
+        while z1 < iter1+1:
+            rval1 = np.random.randint(0, 10, 10)
+            z1 += 1
+        while z2 < iter2+1:
+            rval2 = np.random.randint(0, 10, 10)
+            z2 += 1
+        while z3 < iter3+1:
+            rval3 = np.random.randint(0, 10, 10)
+            z3 += 1
+        while z4 < iter4+1:
+            rval4 = np.random.randint(0, 10, 10)
+            z4 += 1
+
+        #walls!
+        WallArray1 = [rval1[0]*100, rval1[1]*100, rval1[2]*100, 
+        rval1[3]*100, rval1[4]*100, rval1[1]*100, rval1[6]*100, 
+        rval1[7]*100, rval1[8]*100, rval1[1]*100]
+
+        WallArray2 = [rval2[0]*100, rval2[1]*100, rval2[2]*100, 
+        rval2[3]*100, rval2[4]*100, rval2[5]*100, rval2[6]*100, 
+        rval2[7]*100, rval2[8]*100, rval2[1]*100]
+        
+        WallArray3 = [rval3[0]*100, rval3[1]*100, rval3[2]*100, 
+        rval3[1]*100, rval3[4]*100, rval3[5]*100, rval3[6]*100, 
+        rval3[7]*100, rval3[8]*100, rval3[9]*100]
+
+        WallArray4 = [rval4[0]*100, rval4[1]*100, rval4[2]*100, 
+        rval4[3]*100, rval4[4]*100, rval4[5]*100, rval4[1]*100, 
+        rval4[7]*100, rval4[8]*100, rval4[9]*100]
 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -105,20 +123,17 @@ def gameloop(score):
             and x1 < WallArray1[j]+100
             and (y1 == SpawnDisty[0]+20 or y1 == SpawnDisty[0]+10)):
                 gameOver = True   
-            
 
             if (x1 >= WallArray2[j] 
             and x1 < WallArray2[j]+100
             and (y1 == SpawnDisty[1]+20 or y1 == SpawnDisty[1]+10)):
                 gameOver = True   
-            
 
             if (x1 >= WallArray3[j] 
             and x1 < WallArray3[j]+100
             and (y1 == SpawnDisty[2]+20 or y1 == SpawnDisty[2]+10)):
                 gameOver = True
             
-
             if (x1 >= WallArray4[j] 
             and x1 < WallArray4[j]+100
             and (y1 == SpawnDisty[3]+20 or y1 == SpawnDisty[3]+10)):
@@ -136,25 +151,34 @@ def gameloop(score):
         while i < len(SpawnDisty):
             SpawnDisty[i] += 10
             i += 1
-
+            
             if SpawnDisty[0]>= height:
                 SpawnDisty[0] = 0
                 score += 1
+                diff += 1
+                iter1 += 1
             if SpawnDisty[1]>= height:
                 SpawnDisty[1] = 0
                 score += 1
+                diff += 1
+                iter2 += 1
             if SpawnDisty[2]>= height:
                 SpawnDisty[2] = 0
                 score += 1
+                diff += 1
+                iter3 += 1
             if SpawnDisty[3]>= height:
                 SpawnDisty[3] = 0 
-                score += 1        
+                score += 1
+                diff += 1
+                iter4 += 1
 
         #difficulty
-        if score%11 == 10:
-            gamespeed += 3.25
-            score += 1
-    
+        if diff%11 == 10:
+            gamespeed += 2.5
+            diff += 1
+        
+        
         #drawing!
         dis.fill(black)
         player(x1, y1)
@@ -185,9 +209,4 @@ def gameloop(score):
     pygame.quit()
     quit()
 
-gameloop(score)
-
-
-
-
-
+gameloop(score, diff)

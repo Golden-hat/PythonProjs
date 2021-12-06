@@ -113,6 +113,11 @@ def gameloop(score, diff):
                 pygame.display.update()
 
                 for event in pygame.event.get():
+
+                    if event.type==pygame.QUIT:
+                        gameOver = True
+                        gameClose = False
+
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_q:
                             gameOver = True
@@ -120,7 +125,9 @@ def gameloop(score, diff):
                         if event.key == pygame.K_c:
                             gameOver = False
                             SpawnDisty = [0, -200, -400, -600]
+                            score = 0
                             gameloop(score, diff)
+               
 
         for event in pygame.event.get():
 
@@ -142,11 +149,11 @@ def gameloop(score, diff):
                     x1_change = 15;
                     
         x1 += x1_change
-        y1 += y1_change
+        y1 += y1_change 
 
         #collisions!
         j = 0
-        while j < len(WallArray1):
+        while j < len(WallArray1): 
 
             if (x1 >= WallArray1[j] 
             and x1 < WallArray1[j]+100

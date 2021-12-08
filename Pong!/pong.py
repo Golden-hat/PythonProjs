@@ -1,7 +1,7 @@
 import pygame
 import random
 import time
-
+import sys
 from pygame import draw
 from pygame.constants import K_DOWN, K_UP, KEYDOWN, K_q, K_s, K_w
 
@@ -10,7 +10,6 @@ pygame.init()
 #Variables!
 width = 1000
 height = 800
-gameclose = False
 rectlen = 180
 rounds = 5
 
@@ -60,7 +59,7 @@ def gameloop(randx, randy, rounds, i, score1, score2):
     signy = round(random.randint(-1, 1))
     print(signy)
     print(signx)
-    diff = 0
+    diff = -1
 
     movy1 = 300
     movy2 = 300
@@ -69,10 +68,7 @@ def gameloop(randx, randy, rounds, i, score1, score2):
     movy2_change = 0
     gamespeed = 40
     gameclose = True
-
-    if i == rounds:
-        gameclose = False
-
+    
     while gameclose == False:
 
         dis.fill(black)
@@ -102,10 +98,12 @@ def gameloop(randx, randy, rounds, i, score1, score2):
 
             if event.type==pygame.QUIT:
                 gameclose = True
+                i = rounds
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     gameclose = True
+                    i = rounds
                 if event.key == pygame.K_c:
                     gameover = False
                     score1 = 0
@@ -113,7 +111,6 @@ def gameloop(randx, randy, rounds, i, score1, score2):
                     i = 0
                     gameloop(randx, randy, rounds, i, score1, score2)
     
-
     while i < rounds:
 
         gameover = False
@@ -191,16 +188,22 @@ def gameloop(randx, randy, rounds, i, score1, score2):
             if  movy2 >= height-rectlen:
                 movy2 = height-rectlen
 
+
             #Drawing!
             dis.fill(black)
+
             drawPoint(coordx, coordy)
 
             drawRectPlayers(60, movy1)
             drawRectPlayers(width-70, movy2)
-            drawline()
-
+            drawline()    
             message(str(score1), white)
             message2(str(score2), white)
+            pygame.display.update()
+
+            if diff == -1:
+                time.sleep(1)
+                diff +=1
 
             #difficulty
             if diff%6 == 5:
@@ -211,10 +214,15 @@ def gameloop(randx, randy, rounds, i, score1, score2):
             clock = pygame.time.Clock() 
             clock.tick(gamespeed)
 
-            pygame.display.update()
-
     pygame.quit()
-    quit()        
+    quit()
+
+for event in pygame.event.get():
+
+    if event.type==pygame.QUIT:
+        pygame.display.quit()
+        pygame.quit()
+        sys.exit()
 
 gameloop(randx, randy, rounds, 0, score1, score2)
 

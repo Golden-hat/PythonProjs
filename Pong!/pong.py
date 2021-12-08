@@ -68,7 +68,10 @@ def gameloop(randx, randy, rounds, i, score1, score2):
     movy2_change = 0
     gamespeed = 40
     gameclose = True
-    
+
+    if i == rounds:
+        gameclose = False
+
     while gameclose == False:
 
         dis.fill(black)
@@ -188,17 +191,16 @@ def gameloop(randx, randy, rounds, i, score1, score2):
             if  movy2 >= height-rectlen:
                 movy2 = height-rectlen
 
-
             #Drawing!
             dis.fill(black)
 
             drawPoint(coordx, coordy)
-
             drawRectPlayers(60, movy1)
             drawRectPlayers(width-70, movy2)
             drawline()    
             message(str(score1), white)
             message2(str(score2), white)
+            
             pygame.display.update()
 
             if diff == -1:
@@ -216,13 +218,6 @@ def gameloop(randx, randy, rounds, i, score1, score2):
 
     pygame.quit()
     quit()
-
-for event in pygame.event.get():
-
-    if event.type==pygame.QUIT:
-        pygame.display.quit()
-        pygame.quit()
-        sys.exit()
 
 gameloop(randx, randy, rounds, 0, score1, score2)
 

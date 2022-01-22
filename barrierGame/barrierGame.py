@@ -1,7 +1,6 @@
 import numpy as np
 from numpy.random.mtrand import rand
 import pygame
-import time
 from pygame.constants import K_DOWN, K_LEFT, K_RIGHT, K_SPACE, K_UP, KEYDOWN, TIMER_RESOLUTION, K_a, K_c, K_d, K_s, K_w
 
 pygame.init();

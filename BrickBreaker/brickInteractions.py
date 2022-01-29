@@ -1,7 +1,5 @@
-from email.headerregistry import Group
 import numpy as np
 import pygame
-import math
 import time
 import random
 
@@ -11,8 +9,11 @@ pygame.init()
 heigth = 800
 width = 1000
 squareHeight = 20
-squareWidth = 40
+squareWidth = 100
 speed = 300
+
+separation = 50
+
 font_style = pygame.font.SysFont(None, 20)
 font_style2 = pygame.font.SysFont(None, 50)
 
@@ -62,7 +63,7 @@ def blockRow(timesX, timesY):
         displacementX = 0
         while i < timesX:
 
-            pygame.draw.rect(dis, white, [0+displacementX, 0+displacementY, squareWidth, squareHeight], 1)
+            pygame.draw.rect(dis, white, [0+displacementX + separation, 0+displacementY + separation, squareWidth, squareHeight], 1)
             displacementX = displacementX +squareWidth
             i = i + 1
             k = k + 1
@@ -78,18 +79,17 @@ def game():
     displacementX = 0
     displacementY = 0
 
-    Ysquares = 20
-    Xsquares = 25
+    Ysquares = 8
+    Xsquares = 9
 
-    playerX = 400
+    playerX = 450
     playerY = 650
     changeX = 0
 
     vecX = 500
     vecY = 500
     changeBx = 0
-    changeBy = 1
-
+    changeBy = 2
     numBalls = 1
 
     score = -1
@@ -100,7 +100,7 @@ def game():
         i = 0
         displacementX = 0
         while i < Xsquares:
-            GroupBlock.append(block(displacementX, displacementY, True))
+            GroupBlock.append(block(displacementX + separation , displacementY + separation, True))
             displacementX = displacementX +squareWidth
             i = i + 1
         displacementY = displacementY + squareHeight
@@ -123,13 +123,13 @@ def game():
 
             if event.type==pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    changeX = -1.5
+                    changeX = -2.5
                 elif event.key == pygame.K_RIGHT:
-                    changeX = 1.5 
+                    changeX = 2.5 
                 if event.key == pygame.K_a:
-                    changeX = -1.5
+                    changeX = -2.5
                 elif event.key == pygame.K_d:
-                    changeX = 1.5
+                    changeX = 2.5
                 if event.key == pygame.K_s:
                     changeX = 0
                 elif event.key == pygame.K_DOWN:
@@ -143,10 +143,10 @@ def game():
         #logic!
         j = 0
         while j < len(GroupBlock):
-            if (vecX >= GroupBlock[j].positionX 
-            and vecX <= GroupBlock[j].positionX + squareWidth 
-            and vecY >= GroupBlock[j].positionY 
-            and vecY <= GroupBlock[j].positionY + squareHeight 
+            if (np.round(vecX) >= GroupBlock[j].positionX 
+            and np.round(vecX) <= GroupBlock[j].positionX + squareWidth 
+            and np.round(vecY) >= GroupBlock[j].positionY 
+            and np.round(vecY) <= GroupBlock[j].positionY + squareHeight 
             and GroupBlock[j].status is True):
                 GroupBlock[j].set_status(False)
                 score = score + 1
@@ -159,13 +159,13 @@ def game():
             i = i + 1
 
         #barCollision!
-        if(playerX <= 0 or playerX+200 >= width):
+        if(playerX <= 0 or playerX+100 >= width):
             changeX = 0
 
         if(vecY == playerY and
-        vecX >= playerX and vecX <= playerX + 200):
-            changeBy = -1
-            changeBx = random.randint(-135, 135)/100
+        vecX >= playerX and vecX <= playerX + 100):
+            changeBy = changeBy*-1
+            changeBx = random.randint(-200, 200)/100
             print(changeBx)
 
         vecY = vecY + changeBy
@@ -184,22 +184,24 @@ def game():
         x = 0
         while x < len(GroupBlock):
             if (GroupBlock[x].status is True):
+                
+                if(np.round(vecY) >= GroupBlock[x].positionY
+                and np.round(vecY) <= GroupBlock[x].positionY + squareHeight
+                and (np.round(vecX) == GroupBlock[x].positionX + squareWidth
+                or np.round(vecX) == GroupBlock[x].positionX)):
+                    changeBx = changeBx*-1
+
                 if(vecX >= GroupBlock[x].positionX 
                 and vecX <= GroupBlock[x].positionX + squareWidth 
                 and (vecY == GroupBlock[x].positionY + squareHeight
                 or vecY == GroupBlock[x].positionY)):
                     changeBy = changeBy*-1
 
-                if(vecY >= GroupBlock[x].positionY
-                and vecY <= GroupBlock[x].positionY + squareHeight
-                and (vecX == GroupBlock[x].positionX+ squareWidth
-                or vecX == GroupBlock[x].positionX)):
-                    changeBx = changeBx*-1
             x = x + 1
 
         #bar!
-        pygame.draw.rect(dis, white, [playerX, playerY, 200, squareHeight], 3)
-        pygame.draw.rect(dis, red, [playerX, playerY, 200, squareHeight])
+        pygame.draw.rect(dis, white, [playerX, playerY, 100, 10], 3)
+        pygame.draw.rect(dis, red, [playerX, playerY, 100, 10])
 
         #ball!
         pygame.draw.rect(dis, white, [vecX, vecY, 3, 3], 1)
@@ -207,6 +209,12 @@ def game():
         #gameOver!
         if(numBalls <= 0):
             dis.fill(black)
+
+            changeBx = 0
+            changeBy = 0
+
+            vecX = vecX
+            vecY = vecY
 
             message3("You lost",red)
 
@@ -227,9 +235,16 @@ def game():
                     if event.key == pygame.K_c:
                         gameover = False
                         game()
+
         #win!
-        if(score >= 50):
+        if(score >= Ysquares*Xsquares):
             dis.fill(black)
+
+            changeBx = 0
+            changeBy = 0
+
+            vecX = vecX
+            vecY = vecY
 
             message3("You won!",red)
 

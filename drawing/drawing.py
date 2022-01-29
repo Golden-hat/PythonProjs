@@ -70,7 +70,7 @@ def gameLoop():
 
                 print(vecX[numberOfElem], vecY[numberOfElem])
                 numberOfElem = numberOfElem + 1
-
+            
         pygame.display.update()
 
 gameLoop()

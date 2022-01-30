@@ -191,8 +191,10 @@ def game():
         PowerUpY += PowerUpYchange
 
         #barCollisions!
-        if(playerX <= 0 or playerX+100 >= width):
-            changeX = 0
+        if(playerX <= 0):
+            playerX = 0
+        if(playerX+100 >= width):
+            playerX = width-100
 
         if(vecY == playerY and
         vecX >= playerX and vecX <= playerX + 100):

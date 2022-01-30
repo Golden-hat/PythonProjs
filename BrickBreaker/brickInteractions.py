@@ -10,7 +10,7 @@ heigth = 800
 width = 1000
 squareHeight = 20
 squareWidth = 100
-speed = 300
+speed = 240
 
 separation = 50
 
@@ -21,6 +21,7 @@ font_style2 = pygame.font.SysFont(None, 50)
 black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
+yellow = (154,205,50)
 
 #display!
 dis = pygame.display.set_mode((width,heigth))
@@ -79,7 +80,7 @@ def game():
     displacementX = 0
     displacementY = 0
 
-    Ysquares = 8
+    Ysquares = 20
     Xsquares = 9
 
     playerX = 450
@@ -91,8 +92,19 @@ def game():
     changeBx = 0
     changeBy = 2
     numBalls = 1
+    ballColor = white
 
     score = -1
+
+    SpawnPowerUp = False
+    SpawnAmount = 0
+    PowerUpX = 0
+    PowerUpY = 0
+    PowerUpYchange = 1
+
+    limit = 10
+
+    IgnoreCollisions = False
 
     GroupBlock = []
     
@@ -113,23 +125,23 @@ def game():
         #instructions!
         message("A/D keys to move LEFT or RIGHT, S key to STOP. Also works with <-, DOWN, -> .", white)
 
-        #Score!
+        #score!
         if score != -1:
             message2("Score: " + str(score), white)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gameover = True
+                quit()
 
             if event.type==pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    changeX = -2.5
+                    changeX = -2.7
                 elif event.key == pygame.K_RIGHT:
-                    changeX = 2.5 
+                    changeX = 2.7 
                 if event.key == pygame.K_a:
-                    changeX = -2.5
+                    changeX = -2.7
                 elif event.key == pygame.K_d:
-                    changeX = 2.5
+                    changeX = 2.7
                 if event.key == pygame.K_s:
                     changeX = 0
                 elif event.key == pygame.K_DOWN:
@@ -150,6 +162,20 @@ def game():
             and GroupBlock[j].status is True):
                 GroupBlock[j].set_status(False)
                 score = score + 1
+                rand = random.randint(-4, 4)
+
+                limit = limit -1
+                if (limit <= 0):
+                    limit = 10
+                    ballColor = white
+                    IgnoreCollisions = False
+
+                if rand == 4 and SpawnAmount == 0:
+                    PowerUpX = GroupBlock[j].positionX + squareWidth/2
+                    PowerUpY = GroupBlock[j].positionY + squareHeight/2
+                    SpawnPowerUp = True
+                    SpawnAmount = 1
+
             j = j + 1
 
         i = 0
@@ -158,7 +184,13 @@ def game():
                 pygame.draw.rect(dis, black, [GroupBlock[i].positionX, GroupBlock[i].positionY, squareWidth, squareHeight], 1)
             i = i + 1
 
-        #barCollision!
+        #PowerUp!
+        if(SpawnPowerUp == True and SpawnAmount == 1):
+            pygame.draw.circle(dis, white, (PowerUpX, PowerUpY), 5)
+
+        PowerUpY += PowerUpYchange
+
+        #barCollisions!
         if(playerX <= 0 or playerX+100 >= width):
             changeX = 0
 
@@ -171,7 +203,14 @@ def game():
         vecY = vecY + changeBy
         vecX = vecX + changeBx
 
-        #wallCollisions!
+        if(PowerUpY == playerY and
+        PowerUpX >= playerX and PowerUpX <= playerX + 100):
+            SpawnPowerUp = False
+            SpawnAmount -= 1
+            IgnoreCollisions = True
+            ballColor = yellow
+
+        #LimitCollisions!
         if (vecY == 0):
             changeBy = changeBy*-1
         if (vecX <= 0 or vecX >= width-1):
@@ -179,33 +218,38 @@ def game():
 
         if(vecY >= heigth):
             numBalls =  numBalls - 1
-        
+
+        if(PowerUpY >= heigth):
+            SpawnPowerUp = False
+            SpawnAmount = 0
+
         #blockCollisions!
         x = 0
-        while x < len(GroupBlock):
-            if (GroupBlock[x].status is True):
-                
-                if(np.round(vecY) >= GroupBlock[x].positionY
-                and np.round(vecY) <= GroupBlock[x].positionY + squareHeight
-                and (np.round(vecX) == GroupBlock[x].positionX + squareWidth
-                or np.round(vecX) == GroupBlock[x].positionX)):
-                    changeBx = changeBx*-1
+        if (IgnoreCollisions == False):
+            while x < len(GroupBlock):
+                if (GroupBlock[x].status is True):
+                    
+                    if(np.round(vecY) >= GroupBlock[x].positionY
+                    and np.round(vecY) <= GroupBlock[x].positionY + squareHeight
+                    and (np.round(vecX) == GroupBlock[x].positionX + squareWidth
+                    or np.round(vecX) == GroupBlock[x].positionX)):
+                        changeBx = changeBx*-1
 
-                if(vecX >= GroupBlock[x].positionX 
-                and vecX <= GroupBlock[x].positionX + squareWidth 
-                and (vecY == GroupBlock[x].positionY + squareHeight
-                or vecY == GroupBlock[x].positionY)):
-                    changeBy = changeBy*-1
+                    if(vecX >= GroupBlock[x].positionX 
+                    and vecX <= GroupBlock[x].positionX + squareWidth 
+                    and (vecY == GroupBlock[x].positionY + squareHeight
+                    or vecY == GroupBlock[x].positionY)):
+                        changeBy = changeBy*-1
 
-            x = x + 1
+                x = x + 1
 
         #bar!
         pygame.draw.rect(dis, white, [playerX, playerY, 100, 10], 3)
         pygame.draw.rect(dis, red, [playerX, playerY, 100, 10])
 
         #ball!
-        pygame.draw.rect(dis, white, [vecX, vecY, 3, 3], 1)
-
+        pygame.draw.rect(dis, ballColor, [vecX, vecY, 3, 3], 1)
+    
         #gameOver!
         if(numBalls <= 0):
             dis.fill(black)
@@ -218,7 +262,7 @@ def game():
 
             message3("You lost",red)
 
-            message4("Press c to try again or q to quit.",red)
+            message4("Spam c to try again or q to quit.",red)
 
             pygame.display.update()
 
@@ -237,7 +281,7 @@ def game():
                         game()
 
         #win!
-        if(score >= Ysquares*Xsquares):
+        if(score >= Xsquares*Ysquares):
             dis.fill(black)
 
             changeBx = 0
@@ -246,9 +290,9 @@ def game():
             vecX = vecX
             vecY = vecY
 
-            message3("You won!",red)
+            message3("You won!", white)
 
-            message4("Press c to try again or q to quit.",red)
+            message4("Spam c to try again or q to quit.", white)
 
             pygame.display.update()
 
@@ -260,7 +304,6 @@ def game():
 
                 if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
                     if event.key == pygame.K_q:
-                        gameover = True
                         quit()
                     if event.key == pygame.K_c:
                         gameover = False

@@ -98,7 +98,7 @@ def game():
 
     SpawnPowerUp = False
     SpawnAmount = 0
-    PowerUpX = 0
+    PowerUpX = -100
     PowerUpY = 0
     PowerUpYchange = 1
 

@@ -1,20 +1,16 @@
 import pygame
-import numpy as py
-import math
-import random
-import time
-
 pygame.init()
 
-#variables!
+#variablesSquare!
 Side = 350
-Degree = 8
+Degree = 9
 width = 2*Side
 heigth = 2*Side
 cX = width/2
 cY = heigth/2
 white = (255,255,255)
 blue = (0,0,255)
+
 #display!
 dis = pygame.display.set_mode((width, heigth))
 pygame.display.set_caption('Recursive!')

@@ -205,8 +205,7 @@ def game():
         vecY = vecY + changeBy
         vecX = vecX + changeBx
 
-        if(PowerUpY == playerY and
-        PowerUpX >= playerX and PowerUpX <= playerX + 100):
+        if(PowerUpY == playerY and PowerUpX >= playerX and PowerUpX <= playerX + 100):
             SpawnPowerUp = False
             SpawnAmount -= 1
             IgnoreCollisions = True
